@@ -8,7 +8,7 @@
         function __construct()
         {
             $list = glob( Instagram::CACHEFOLDER . "*.json" );
-            $oldCount = count($list)+1;
+            $oldCount = count($list);
 
             $i = new Instagram;
             $i  ->fetchJSON( )
