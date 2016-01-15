@@ -10,6 +10,10 @@
             $list = glob( Instagram::CACHEFOLDER . "*.json" );
             $oldCount = count($list);
 
+            if (file_exists(".DEV")) {
+                $oldCount = 0;
+            }
+
             $i = new Instagram;
             $i  ->fetchJSON( )
                 ->parse();
@@ -45,6 +49,7 @@
                     $block = $btemplate;
                     $block = str_replace("{IMAGE}", "data/" . $node->code . ".jpg", $block);
                     $block = str_replace("{CAPTION}", $node->caption, $block);
+                    $block = str_replace("{CODE}", $node->code, $block);
 
                     $blocks .= $block;
                 }

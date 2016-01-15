@@ -1,1 +1,1 @@
-<img src="{IMAGE}" title="{CAPTION}" />
+<a href="https://www.instagram.com/p/{CODE}/" target="_blank"><img src="{IMAGE}" title="{CAPTION}" /></a>
