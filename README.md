@@ -1,5 +1,6 @@
 php btsapp.php
-serve www
+
+serve www (fe: cd www && php -S localhost:1337)
 
 cron php btsapp.php
 Like:

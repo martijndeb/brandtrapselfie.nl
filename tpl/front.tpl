@@ -2,18 +2,12 @@
 <html>
 <head>
     <title>#brandtrapselfie</title>
-    <style>
-        html,body {
-            width: 100%;
-        }
-        img {
-            max-width: 24%;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/front.css">
+    <link rel="stylesheet" type="text/css" href="css/block.css">
 </head>
 <body>
     <h1>#brandtrapselfie</h1>
     Instagram met de hashtag #brandtrapselfie en geniet!<br><br>
-    {BLOCKS}
+    <div id="polaroid-container">{BLOCKS}</div>
 </body>
 </html>

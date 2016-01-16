@@ -1,0 +1,42 @@
+html,body {
+
+    font-family: sans-serif;
+    text-decoration: none;
+
+}
+
+
+.polaroid {
+    -ms-transform: rotate(-2deg);
+    transform: rotate(-2deg);
+}
+
+#polaroid-container :nth-child(even) {
+  -ms-transform: rotate(2deg);
+  transform: rotate(2deg);
+}
+
+#polaroid-container :nth-child(3n) {
+  -ms-transform: none;
+  transform: none;
+  position: relative;
+  top: -5px;
+}
+
+#polaroid-container :nth-child(5n) {
+  -ms-transform: rotate(5deg);
+  position: relative;
+  right: 5px;
+}
+
+#polaroid-container :nth-child(8n) {
+  position: relative;
+  top: 8px;
+  right: 5px;
+}
+
+#polaroid-container :nth-child(11n) {
+  position: relative;
+  top: 3px;
+  left: -5px;
+}
