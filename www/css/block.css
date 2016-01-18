@@ -1,8 +1,7 @@
 .polaroid {
     background: #fff;
     margin: 1rem 0.8rem;
-    display: block;
-    float: left;
+    display: inline-block;
     max-width: 20rem;
     padding: 1rem;
     text-align: center;
