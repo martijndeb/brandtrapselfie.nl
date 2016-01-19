@@ -7,7 +7,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 </head>
 <body>
-    <h1>#brandtrapselfie</h1>
+    <img src="/brandtrapselfie.jpg" alt="#brandtrapselfie" /><br />
     Instagram met de hashtag #brandtrapselfie en geniet!<br><br>
     <div id="polaroid-container">{BLOCKS}</div>
 </body>
