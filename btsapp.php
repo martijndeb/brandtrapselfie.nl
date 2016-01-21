@@ -47,9 +47,13 @@
                 foreach( $nodes as $node )
                 {
                     $block = $btemplate;
-                    $block = str_replace("{IMAGE}", "data/" . $node->code . "_thumb.jpg", $block);
+                    $block = str_replace("{IMAGE}", "data/" . $node->code . "_320.jpg", $block);
                     $block = str_replace("{CAPTION}", $node->caption, $block);
                     $block = str_replace("{CODE}", $node->code, $block);
+
+                    if (!file_exists("data/" . $node->code . "_320.jpg")) {
+                        `convert -strip -filter Lanczos -interlace Plane -sampling-factor 4:2:0 -define jpeg:dct-method=float -quality 65% -geometry 320x www/data/{$node->code}.jpg www/data/{$node->code}_320.jpg`;
+                    }
 
                     $blocks .= $block;
                 }
