@@ -47,7 +47,7 @@
                 foreach( $nodes as $node )
                 {
                     $block = $btemplate;
-                    $block = str_replace("{IMAGE}", "data/" . $node->code . ".jpg", $block);
+                    $block = str_replace("{IMAGE}", "data/" . $node->code . "_thumb.jpg", $block);
                     $block = str_replace("{CAPTION}", $node->caption, $block);
                     $block = str_replace("{CODE}", $node->code, $block);
 
