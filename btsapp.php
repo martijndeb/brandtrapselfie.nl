@@ -50,7 +50,7 @@
                     $block = str_replace("{IMAGE}", "data/" . $node->code . "_320.jpg", $block);
                     $block = str_replace("{CAPTION}", $node->caption, $block);
                     $block = str_replace("{CODE}", $node->code, $block);
-                    $block = str_replace("{TAGMANAGER}", file_get_contents(".tagmanagers"), $block);
+                    $block = str_replace("{TAGMANAGERS}", file_get_contents(".tagmanagers"), $block);
 
                     if (!file_exists("data/" . $node->code . "_320.jpg")) {
                         `convert -strip -filter Lanczos -interlace Plane -sampling-factor 4:2:0 -define jpeg:dct-method=float -quality 75% -geometry 320x www/data/{$node->code}.jpg www/data/{$node->code}_320.jpg`;
