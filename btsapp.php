@@ -18,6 +18,9 @@
             $i  ->fetchJSON( )
                 ->parse();
 
+            $rsscontent = file_get_contents("tpl/rss.tpl");
+            $feeditems = "";
+
             $list = glob( Instagram::CACHEFOLDER . "*.json" );
 
             if ( $oldCount <> count( $list ) ) {
@@ -57,11 +60,20 @@
                     }
 
                     $blocks .= $block;
+
+                    $feeditems .= "<item>
+    <title>" . $node->code . "</title>
+    <link>http://brandtrapselfie.nl/data/". $node->code .".jpg</link>
+    <description>" . $node->caption . "</description>
+    <enclosure url='http://brandtrapselfie.nl/data/". $node->code .".jpg' type='image/jpeg' />
+  </item>";
                 }
 
                 $template = str_replace('{BLOCKS}', $blocks, $template);
                 $template = str_replace("{TAGMANAGERS}", file_get_contents(".tagmanagers"), $template);
+                $rsscontent = str_replace("{FEEDITEMS}", $feeditems, $rsscontent);
                 file_put_contents( 'www/index.html' , $template );
+                file_put_contents( 'www/feed.rss', $rsscontent );
 
             }
 
