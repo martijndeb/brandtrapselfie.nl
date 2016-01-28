@@ -53,11 +53,19 @@
                     $block = str_replace("{IMAGE}", "data/" . $node->code . "_320.jpg", $block);
                     $block = str_replace("{CAPTION}", $node->caption, $block);
                     $block = str_replace("{CODE}", $node->code, $block);
-
+                    $block = str_replace("{LIKES}", $node->likes->count, $block);
+                    $block = str_replace("{LIKESSTRING}", $node->likes->count > 0 ? "<span style='color: #FF0000;'>{$node->likes->count} &#9829;</span> " : "", $block);
+                    $bwidth = 320; $bheight = 320;
 
                     if (!file_exists("data/" . $node->code . "_320.jpg")) {
                         `/usr/local/bin/convert -strip -filter Lanczos -interlace Plane -sampling-factor 4:2:0 -define jpeg:dct-method=float -quality 85% -geometry 320x www/data/{$node->code}.jpg www/data/{$node->code}_320.jpg`;
                     }
+
+                    list($width, $height, $type, $attr) = getimagesize("www/data/{$node->code}_320.jpg");
+                    $bheight = $height;
+
+                    $block = str_replace("{WIDTH}", $width, $block);
+                    $block = str_replace("{HEIGHT}", $height, $block);
 
                     $blocks .= $block;
 

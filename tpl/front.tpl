@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="css/front.css">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name=viewport content="width=device-width, initial-scale=1">
+    <script src="js/lazysizes.min.js" async=""></script>
 </head>
 <body>
     {TAGMANAGERS}
