@@ -71,11 +71,11 @@
 
         }
 
-        public function parse()
+        public function parse($ignoreList)
         {
             foreach( $this->data->entry_data->TagPage[0]->tag->media->nodes as $node )
             {
-                if ( $node->is_video === false )
+                if ( $node->is_video === false && !in_array($node->code, $ignoreList) )
                 {
                     if ( !file_exists( self::CACHEFOLDER . $node->code . ".json" ) )
                     {

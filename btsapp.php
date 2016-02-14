@@ -9,14 +9,26 @@
         {
             $list = glob( Instagram::CACHEFOLDER . "*.json" );
             $oldCount = count($list);
+            $ignoreList = array();
 
             if (file_exists(".DEV")) {
                 $oldCount = 0;
             }
 
+            if (file_exists(".IGNORE")) {
+                $tmp = trim(file_get_contents(".IGNORE"));
+                $tmp2 = explode("\n", $tmp);
+                foreach ($tmp2 as $ignore) {
+                    $ignore = trim($ignore);
+                    if (!empty($ignore)) {
+                        $ignoreList[] = $ignore;
+                    }
+                }
+            }
+
             $i = new Instagram;
             $i  ->fetchJSON( )
-                ->parse();
+                ->parse( $ignoreList );
 
             $rsscontent = file_get_contents("tpl/rss.tpl");
             $feeditems = "";
@@ -49,6 +61,10 @@
 
                 foreach( $nodes as $node )
                 {
+                    if (in_array($node->code, $ignoreList)) {
+                        continue;
+                    }
+
                     $block = $btemplate;
                     $block = str_replace("{IMAGE}", "data/" . $node->code . "_320.jpg", $block);
                     $block = str_replace("{CAPTION}", $node->caption, $block);
