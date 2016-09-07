@@ -74,7 +74,7 @@
                     $bwidth = 320; $bheight = 320;
 
                     if (!file_exists("data/" . $node->code . "_320.jpg")) {
-                        `/usr/local/bin/convert -strip -filter Lanczos -interlace Plane -sampling-factor 4:2:0 -define jpeg:dct-method=float -quality 85% -geometry 320x www/data/{$node->code}.jpg www/data/{$node->code}_320.jpg`;
+                        `/usr/bin/convert -strip -filter Lanczos -interlace Plane -sampling-factor 4:2:0 -define jpeg:dct-method=float -quality 85% -geometry 320x www/data/{$node->code}.jpg www/data/{$node->code}_320.jpg`;
                     }
 
                     list($width, $height, $type, $attr) = getimagesize("www/data/{$node->code}_320.jpg");
