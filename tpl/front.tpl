@@ -9,8 +9,20 @@
 </head>
 <body>
     {TAGMANAGERS}
-    <img src="/brandtrapselfie.jpg" alt="#brandtrapselfie" /><br />
-    Instagram met de hashtag #brandtrapselfie en geniet!<br><br>
-    <div id="polaroid-container">{BLOCKS}</div>
+    <div id="container" class="container">
+	    <div class="staircase staircase-left"></div>
+	    <div class="staircase staircase-right"></div>
+	    <div id="header" class="header">
+		    <div class="header-portret">
+		    	<img src="/brandtrapselfie.jpg" alt="#brandtrapselfie" class="header-img"/>
+		    	<div class="header-text">
+		    		<h2 class="h2-text">Instagram met de hashtag</h2>
+			    	<h1 class="h1-text">#brandtrapselfie</h1>
+			    	<h2 class="h2-text">en geniet!</h2>
+		    	</div>
+		    </div>
+	    </div>
+	    <div id="polaroid-container" class="polaroid-container">{BLOCKS}</div>
+	</div>
 </body>
 </html>
