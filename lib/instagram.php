@@ -2,7 +2,7 @@
 
     class Instagram
     {
-        const URL = 'https://www.instagram.com/explore/tags/brandtrapselfie/?max_id=1307195269398286176'; // Append ?max_id=1096373026222059918 for paging (input highest id for a page).
+        const URL = 'https://www.instagram.com/explore/tags/brandtrapselfie/'; // Append ?max_id=1096373026222059918 for paging (input highest id for a page).
         const CACHEFOLDER = 'cache/';
         const CACHEFILE = 'cache/brandtrapselfie.json';
         const CACHETIMEOUT = 900;

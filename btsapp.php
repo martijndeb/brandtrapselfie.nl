@@ -107,7 +107,7 @@
                     $block = str_replace("{HEIGHT}", $height, $block);
 
 
-                    if (isset($node->date) && is_numeric(@m($node->date,$node->taken_at_timestamp))) {
+                    if (is_numeric(@m($node->date,$node->taken_at_timestamp))) {
                         $date = new DateTime();
                         $date->setTimestamp(@m($node->date,$node->taken_at_timestamp));
 
