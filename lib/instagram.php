@@ -2,7 +2,7 @@
 
     class Instagram
     {
-        const URL = 'https://www.instagram.com/explore/tags/brandtrapselfie/'; // Append ?max_id=1096373026222059918 for paging (input highest id for a page).
+        const URL = 'https://www.instagram.com/explore/tags/brandtrapselfie/?max_id=1307195269398286176'; // Append ?max_id=1096373026222059918 for paging (input highest id for a page).
         const CACHEFOLDER = 'cache/';
         const CACHEFILE = 'cache/brandtrapselfie.json';
         const CACHETIMEOUT = 900;
@@ -73,27 +73,31 @@
 
         public function parse($ignoreList)
         {
-            foreach( $this->data->entry_data->TagPage[0]->tag->media->nodes as $node )
+            foreach( $this->data->entry_data->TagPage[0]->graphql->hashtag->edge_hashtag_to_media->edges as $nodeContainer )
             {
-                if ( $node->is_video === false && !in_array($node->code, $ignoreList) )
-                {
-                    if ( !file_exists( self::CACHEFOLDER . $node->code . ".json" ) )
+                if ( isset($nodeContainer->node) ) {
+                    $node = $nodeContainer->node;
+                    $node->code = $node->shortcode;
+                    if ( $node->is_video === false && !in_array($node->code, $ignoreList) )
                     {
-                        file_put_contents( self::CACHEFOLDER . $node->code . ".json", (string) json_encode( $node ) );
+                        if ( !file_exists( self::CACHEFOLDER . $node->code . ".json" ) )
+                        {
+                            file_put_contents( self::CACHEFOLDER . $node->code . ".json", (string) json_encode( $node ) );
+                        }
+
+                        $this->unsortedNodes[] = $node;
+
+                        if ( !file_exists( self::DATAFOLDER . $node->code . ".jpg" ) ) {
+                            $img = file_get_contents( $node->display_url );
+                            file_put_contents( self::DATAFOLDER . $node->code . ".jpg", $img );
+                        }
+
+                        if ( !file_exists( self::DATAFOLDER . $node->code . "_thumb.jpg" ) ) {
+                            $img = file_get_contents( $node->thumbnail_src );
+                            file_put_contents( self::DATAFOLDER . $node->code . "_thumb.jpg", $img );
+                        }
+
                     }
-
-                    $this->unsortedNodes[] = $node;
-
-                    if ( !file_exists( self::DATAFOLDER . $node->code . ".jpg" ) ) {
-                        $img = file_get_contents( $node->display_src );
-                        file_put_contents( self::DATAFOLDER . $node->code . ".jpg", $img );
-                    }
-
-                    if ( !file_exists( self::DATAFOLDER . $node->code . "_thumb.jpg" ) ) {
-                        $img = file_get_contents( $node->thumbnail_src );
-                        file_put_contents( self::DATAFOLDER . $node->code . "_thumb.jpg", $img );
-                    }
-
                 }
             }
 

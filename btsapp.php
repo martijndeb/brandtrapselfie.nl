@@ -60,15 +60,15 @@
                 foreach( $list as $fn )
                 {
                     $n = json_decode( file_get_contents( $fn ) );
-                    if ( isset( $n->code ) && isset( $n->date ) ) {
+                    if ( isset( $n->code ) && null !== @m($n->date,$n->taken_at_timestamp) ) {
                         $nodes[] = $n;
                     }
                 }
 
                 usort( $nodes, function( $a, $b ) {
 
-                    return (float) $a->date != (float) $b->date
-                            ? (float) $a->date > (float) $b->date
+                    return (float) @m($a->date,$a->taken_at_timestamp) != (float) @m($b->date,$b->taken_at_timestamp)
+                            ? (float) @m($a->date,$a->taken_at_timestamp) > (float) @m($b->date,$b->taken_at_timestamp)
                                 ? -1 : 1
                             : 0 ;
 
@@ -90,10 +90,10 @@
 
                     $block = $btemplate;
                     $block = str_replace("{IMAGE}", "data/" . $node->code . "_320.jpg", $block);
-                    $block = str_replace("{CAPTION}", $node->caption, $block);
+                    $block = str_replace("{CAPTION}", @m($node->caption,$node->edge_media_to_caption->edges[0]->node->text), $block);
                     $block = str_replace("{CODE}", $node->code, $block);
-                    $block = str_replace("{LIKES}", $node->likes->count, $block);
-                    $block = str_replace("{LIKESSTRING}", $node->likes->count > 0 ? "<span style='color: #FF0000;'>{$node->likes->count} &#9829;</span> " : "", $block);
+                    $block = str_replace("{LIKES}", @m($node->likes->count,$node->edge_liked_by->count), $block);
+                    $block = str_replace("{LIKESSTRING}", @m($node->likes->count,$node->edge_liked_by->count) > 0 ? "<span style='color: #FF0000;'>" . @m($node->likes->count,$node->edge_liked_by->count) . " &#9829;</span> " : "", $block);
                     $bwidth = 320; $bheight = 320;
 
                     if (!file_exists("data/" . $node->code . "_320.jpg")) {
@@ -107,9 +107,9 @@
                     $block = str_replace("{HEIGHT}", $height, $block);
 
 
-                    if (isset($node->date) && is_numeric($node->date)) {
+                    if (isset($node->date) && is_numeric(@m($node->date,$node->taken_at_timestamp))) {
                         $date = new DateTime();
-                        $date->setTimestamp($node->date);
+                        $date->setTimestamp(@m($node->date,$node->taken_at_timestamp));
 
                         $day = $date->format('w');
                         $month = $date->format('n') - 1;
@@ -162,7 +162,7 @@
                     $feeditems .= "<item>
     <title>" . $node->code . "</title>
     <link>http://brandtrapselfie.nl/data/". $node->code .".jpg</link>
-    <description>" . $node->caption . "</description>
+    <description>" . @m($node->caption,$node->edge_media_to_caption->edges[0]->node->text) . "</description>
     <enclosure url='http://brandtrapselfie.nl/data/". $node->code .".jpg' type='image/jpeg' />
   </item>";
                 }
@@ -223,6 +223,14 @@
 
         }
 
+    }
+
+    function m(...$args) {
+        foreach($args as $arg) {
+            if (null !== $arg && @!empty($arg)) {
+                return $arg;
+            }
+        }
     }
 
     new BTSApp;
